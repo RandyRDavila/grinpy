@@ -33,7 +33,7 @@ def connecting_paths(G, v):
     return paths_from_v
     
 
-def is_rainbow_path(P, edge_color_dictionary):
+def is_rainbow_path(P, edge_coloring):
     """ Return a boolean statement True if P is a rainbow path, and False otherwise
     
     Parameters
@@ -50,7 +50,20 @@ def is_rainbow_path(P, edge_color_dictionary):
     
     for edge_1 in P.edges():
         for edge_2 in P.edges():
-            if edge_1 != edge_2 and edge_color_dictionary[edge_1] == edge_color_dictionary[edge_2]:
+            if edge_1 != edge_2 and edge_coloring[edge_1] == edge_coloring[edge_2]:
                 return False
     return True
     
+def is_vertex_rainbow_connected(G,v, edge_coloring):
+    #TODO: Add documentation
+    for path in connecting_paths(G,v):
+        if is_rainbow_path(path, edge_coloring) == True:
+            return True
+    return False
+
+def is_graph_rainbow_connected(G, edge_coloring):
+    #TODO: Addo documentation
+    for vertex in G.nodes():
+        if is_vertex_rainbow_connected(G,vertex,edge_coloring) == False:
+            return False
+    return True
